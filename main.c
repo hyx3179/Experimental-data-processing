@@ -23,13 +23,13 @@ int main()
     double data[sjsl];
 
     /* 定义数组元素 */
-    float element;
+    double element;
 
     printf("输入数据（用空格分隔）\n");
     for (i = 0; i < sjsl; i++)
 	{
 	    /* 定义第 i 个元素 */
-	    scanf("%f", &element);
+	    scanf("%lf", &element);
 	    data[i] = element;
 	}
 
