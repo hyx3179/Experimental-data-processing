@@ -1,37 +1,39 @@
 #include <stdio.h>
 #include <math.h>
 
-double getAverage(double arr[], int sjsl, int badvalue)
+int sjsl;
+int i;
+double x[128];
+
+double getAverage(double arr[], int total, int badvalue)
 {
-    int i;
     double sum, avg;
-    for (i = 0; i < sjsl; i++)
+    for (i = 0; i < total; i++)
 	{
 	    sum += arr[i];
 	}
-    avg = sum / (sjsl - badvalue);
+    avg = sum / (total - badvalue);
 }
 
-double getvariance(double arr[], int sjsl, double avg, int badvalue)
+double getvariance(double arr[], int total, double avg, int badvalue)
 {
-    int i;
     double variance, sum;
-    for (sum = 0, i = 0; i < sjsl; i++)
+    for (sum = 0, i = 0; i < total; i++)
 	{
 	    if (arr[i] != 0)
 		{
 		    sum += pow((arr[i] - avg), 2);
 		}
 	}
-    variance = sqrt(sum / (sjsl - 1 - badvalue));
+    variance = sqrt(sum / (total - 1 - badvalue));
 }
 
-double getuncertaintyA(double variance, int sjsl)
+double getuncertaintyA(int total, double variance)
 {
     double tp, uncertaintyA;
     printf("输入修正系数tp(ν) = ");
     scanf("%lf", &tp);
-    uncertaintyA = tp * variance / sqrt(sjsl);
+    uncertaintyA = tp * variance / sqrt(total);
 }
 
 double getuncertaintyB()
