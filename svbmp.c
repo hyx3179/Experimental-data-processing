@@ -1,11 +1,16 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+void definearray (double arr[]);
+
 int i;
+int sjsl;
+int w, h;
+double x[128];
+
 void WriteBMP (char *pixels)
 {
-
-	int bmi[] = { w * h * 3 + 54, 0, 54, 40, w, h, 1 | 3 * 8 << 16, 0, 0, 0, 0, 0, 0 };
+	int bmi[] = { w * h * 3 + 54, 0, 54, 40, w, h, 1 | 24 << 16, 0, 0, 0, 0, 0, 0 };
 	FILE *fp = fopen ("graph.bmp", "w");
 	fprintf (fp, "BM");
 	fwrite (bmi, 52, 1, fp);
@@ -13,18 +18,20 @@ void WriteBMP (char *pixels)
 	fclose (fp);
 }
 
-void main ()
+void svbmp (double y[])
 {
-	int w = 1000, h = 1000;
-	int z;
+	w = 100 * (sjsl + 1);
+	h = 1000;
 	char pixels[w * h * 3];
 
 	/* 绘制基底 */
+	int z;
 	for (i = 0; i < w * h * 3;)
 	{
 		pixels[i] = 255;
 		++i;
 	}
+
 	for (i = 0; i < w * h * 3;)
 	{
 		pixels[i] = 230;
@@ -34,6 +41,7 @@ void main ()
 		pixels[i] = 230;
 		i = i + 10 * 3 - 2;
 	}
+
 	for (i = 0; i < w * h * 3; i++)
 	{
 		if (i % (10 * w * 3) == 0)
@@ -50,13 +58,51 @@ void main ()
 		}
 	}
 
+	for (i = 0; i < w * h * 3;)
+	{
+		pixels[i] = 100;
+		++i;
+		pixels[i] = 100;
+		++i;
+		pixels[i] = 100;
+		i = i + 100 * 3 - 2;
+	}
+
+	for (i = 0; i < w * h * 3; i++)
+	{
+		if (i % (100 * w * 3) == 0)
+		{
+			for (z = i; z < i + w * 3;)
+			{
+				pixels[z] = 100;
+				++z;
+				pixels[z] = 100;
+				++z;
+				pixels[z] = 100;
+				++z;
+			}
+		}
+	}
+
 	/* 绘制点 */
-	double x[] = { 0, 1, 2, 3, 4, 5, 6, 7 };
-	double y[] = { 5.7, 9.6, 13.6, 17.8, 22.2, 26.0, 31.0, 35.8 };
+	for (i = 0; i < sjsl; i++)
+		x[i] = i + 1;
+	do
+	{
+		i = getchar ();
+		printf ("x默认为1-n\n");
+		printf ("是否重新输入？1 是 0 否 ：");
+		i = getchar ();
+		if (i == '1')
+			definearray (x);
+	}
+	while (!(i == '0' || i == '1'));
+	definearray (x);
+	double y0 = y[sjsl - 1] - y[0] + 2;
 	int t = 0;
 	for (i = 0; i < w * h * 3; i++)
 	{
-		if (i == y[t] * 10 * h * 3 + x[t] * w / 10 * 3)
+		if (i == (int) (y[t] * h / y0 * w * 3 + x[t] / (sjsl + 1) * w * 3))
 		{
 			z = i;
 			pixels[z - w * 3 - 3] = 0;

@@ -3,7 +3,7 @@
 
 int sjsl;
 int i;
-double x[128];
+double data[128];
 
 double getAverage (double arr[], int total, int badvalue)
 {

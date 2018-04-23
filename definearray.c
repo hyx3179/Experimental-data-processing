@@ -2,9 +2,8 @@
 
 int sjsl;
 int i;
-double x[128];
 
-void definearray ()
+void definearray (double arr[])
 {
 	/* 初始化数组 */
 	/* 定义数据数量 */
@@ -18,14 +17,14 @@ void definearray ()
 	for (i = 0; i < sjsl; i++)
 	{
 		/* 定义第 i 个元素 */
-		scanf ("%lf", &x[i]);
+		scanf ("%lf", &arr[i]);
 	}
 
 	/* 数据检验 */
 	/* 输出数组中每个元素的值 */
 	for (i = 0; i < sjsl; i++)
 	{
-		printf (" x[%d] = ", i + 1);
-		printf ("%f\n", x[i]);
+		printf (" data[%d] = ", i + 1);
+		printf ("%f\n", arr[i]);
 	}
 }

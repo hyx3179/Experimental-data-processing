@@ -9,7 +9,7 @@ double getuncertainty (double uncertaintyA, double uncertaintyB);
 
 int sjsl;
 int i;
-double x[128];
+double data[128];
 
 void uncertaintyassessment ()
 {
@@ -18,7 +18,7 @@ void uncertaintyassessment ()
 	do
 	{
 		i = getchar ();
-		printf ("是否存在零位误差？1 是 0 否\n");
+		printf ("是否存在零位误差？1 是 0 否 ：");
 		i = getchar ();
 		if (i == '1')
 		{
@@ -36,22 +36,22 @@ void uncertaintyassessment ()
 	{
 		nobadvalue = 1;
 		/* 计算平均值 */
-		avg = getAverage (x, sjsl, badvalue);
+		avg = getAverage (data, sjsl, badvalue);
 		avg0 = avg - x0;
 
 		/* 计算S(x) */
-		variance = getvariance (x, sjsl, avg, badvalue);
+		variance = getvariance (data, sjsl, avg, badvalue);
 
 		/* 剔除坏值 */
 		for (i = 0; i < sjsl; i++)
 		{
-			if (x[i] != 0)
+			if (data[i] != 0)
 			{
-				if (fabs (x[i] - avg) > 3 * variance)
+				if (fabs (data[i] - avg) > 3 * variance)
 				{
-					printf ("x[%d] = ", i + 1);
-					printf ("%f 为坏值\n", x[i]);
-					x[i] = 0;
+					printf ("data[%d] = ", i + 1);
+					printf ("%f 为坏值\n", data[i]);
+					data[i] = 0;
 					badvalue++;
 					nobadvalue = 0;
 				}
@@ -78,7 +78,7 @@ void uncertaintyassessment ()
 	/* 直接测量结果 */
 	printf ("平均值 x = %f\n", avg);
 	printf ("消除零位误差平均值 x = %f\n", avg0);
-	printf ("标准偏差 Sx = %f\n", variance);
+	printf ("标准偏差 S(x) = %f\n", variance);
 	printf ("u(A) = %f\n", uncertaintyA);
 	printf ("u(B) = %f\n", uncertaintyB);
 	printf ("u(x) = %f\n", uncertainty);
