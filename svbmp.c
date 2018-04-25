@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <math.h>
 
 void definearray (double arr[]);
 
@@ -11,15 +12,41 @@ double x[128];
 void WriteBMP (char *pixels)
 {
 	int bmi[] = { w * h * 3 + 54, 0, 54, 40, w, h, 1 | 24 << 16, 0, 0, 0, 0, 0, 0 };
-	FILE *fp = fopen ("graph.bmp", "w");
-	fprintf (fp, "BM");
-	fwrite (bmi, 52, 1, fp);
-	fwrite (pixels, 1, w * h * 3, fp);
-	fclose (fp);
+	FILE *bmp = fopen ("graph.bmp", "w");
+	fprintf (bmp, "BM");
+	fwrite (bmi, 52, 1, bmp);
+	fwrite (pixels, 1, w * h * 3, bmp);
+	fclose (bmp);
 }
 
 void svbmp (double y[])
 {
+	for (i = 0; i < sjsl; i++)
+		x[i] = i + 1;
+
+	do
+	{
+		i = getchar ();
+		printf ("x默认为1~N\n");
+		printf ("是否重新输入？1 是 0 否 ：");
+		i = getchar ();
+		if (i == '1')
+			definearray (x);
+	}
+	while (!(i == '0' || i == '1'));
+
+	double y0 = 0;
+	int x0 = sjsl;
+	for (i = 0; i < sjsl; i++)
+	{
+		if (y[i] > y[i + 1])
+			y0 = y[i];
+		else
+			y0 = y[i + 1];
+	}
+	y0 = (int) (log10 (y0) + 1);
+	y0 = pow (10, y0);
+
 	w = 100 * (sjsl + 1);
 	h = 1000;
 	char pixels[w * h * 3];
@@ -31,7 +58,6 @@ void svbmp (double y[])
 		pixels[i] = 255;
 		++i;
 	}
-
 	for (i = 0; i < w * h * 3;)
 	{
 		pixels[i] = 230;
@@ -41,7 +67,6 @@ void svbmp (double y[])
 		pixels[i] = 230;
 		i = i + 10 * 3 - 2;
 	}
-
 	for (i = 0; i < w * h * 3; i++)
 	{
 		if (i % (10 * w * 3) == 0)
@@ -57,7 +82,6 @@ void svbmp (double y[])
 			}
 		}
 	}
-
 	for (i = 0; i < w * h * 3;)
 	{
 		pixels[i] = 100;
@@ -67,7 +91,6 @@ void svbmp (double y[])
 		pixels[i] = 100;
 		i = i + 100 * 3 - 2;
 	}
-
 	for (i = 0; i < w * h * 3; i++)
 	{
 		if (i % (100 * w * 3) == 0)
@@ -85,36 +108,24 @@ void svbmp (double y[])
 	}
 
 	/* 绘制点 */
-	for (i = 0; i < sjsl; i++)
-		x[i] = i + 1;
-	do
-	{
-		i = getchar ();
-		printf ("x默认为1-n\n");
-		printf ("是否重新输入？1 是 0 否 ：");
-		i = getchar ();
-		if (i == '1')
-			definearray (x);
-	}
-	while (!(i == '0' || i == '1'));
-	definearray (x);
-	double y0 = y[sjsl - 1] - y[0] + 2;
+	/* 自定颜色 */
 	int t = 0;
 	for (i = 0; i < w * h * 3; i++)
 	{
-		if (i == (int) (y[t] * h / y0 * w * 3 + x[t] / (sjsl + 1) * w * 3))
+		if (i == (int) ((int) (y[t] * h / y0) * w * 3 + x[t] * w * 3 / (x0 + 1)))
 		{
 			z = i;
+			/* blue */
 			pixels[z - w * 3 - 3] = 0;
-			pixels[z - w * 3] = 0;
+			pixels[z - w * 3 + 0] = 0;
 			pixels[z - w * 3 + 3] = 0;
 			pixels[z - 3] = 0;
-			pixels[z] = 0;
+			pixels[z + 0] = 0;
 			pixels[z + 3] = 0;
 			pixels[z + w * 3 - 3] = 0;
-			pixels[z + w * 3] = 0;
+			pixels[z + w * 3 + 0] = 0;
 			pixels[z + w * 3 + 3] = 0;
-
+			/* green */
 			pixels[z - w * 3 - 2] = 0;
 			pixels[z - w * 3 + 1] = 0;
 			pixels[z - w * 3 + 4] = 0;
@@ -124,7 +135,7 @@ void svbmp (double y[])
 			pixels[z + w * 3 - 2] = 0;
 			pixels[z + w * 3 + 1] = 0;
 			pixels[z + w * 3 + 4] = 0;
-
+			/* red */
 			pixels[z - w * 3 - 1] = 255;
 			pixels[z - w * 3 + 2] = 255;
 			pixels[z - w * 3 + 5] = 255;

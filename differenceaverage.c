@@ -17,14 +17,14 @@ void differenceaverage ()
 	/* 检查测量质量 */
 	printf ("检查测量质量\n");
 	for (i = 0; i < sjsl / 2; i++)
-	{
 		data1[i] = fabs (data[i + 1] - data[i]);
-	}
+
 	for (i = 0; i < sjsl / 2; i++)
 	{
 		printf (" δ'[%d] = ", i + 1);
 		printf ("%f\n", data1[i]);
 	}
+
 	do
 	{
 		i = getchar ();
@@ -38,14 +38,14 @@ void differenceaverage ()
 	/* 逐差计算 */
 	printf ("逐差计算\n");
 	for (i = 0; i < sjsl / 2; i++)
-	{
 		data1[i] = fabs (data[i + sjsl / 2] - data[i]);
-	}
+
 	for (i = 0; i < sjsl / 2; i++)
 	{
 		printf (" δ[%d] = ", i + 1);
 		printf ("%f\n", data1[i]);
 	}
+
 	/* 开始计算 */
 	double avg, avgy, variance;
 

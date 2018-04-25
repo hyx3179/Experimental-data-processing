@@ -14,11 +14,9 @@ void definearray (double arr[])
 	/* 定义数组元素 */
 
 	printf ("输入数据（用空格分隔）\n");
+	/* 定义第 i 个元素 */
 	for (i = 0; i < sjsl; i++)
-	{
-		/* 定义第 i 个元素 */
 		scanf ("%lf", &arr[i]);
-	}
 
 	/* 数据检验 */
 	/* 输出数组中每个元素的值 */

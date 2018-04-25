@@ -9,9 +9,7 @@ double getAverage (double arr[], int total, int badvalue)
 {
 	double sum, avg;
 	for (i = 0; i < total; i++)
-	{
 		sum += arr[i];
-	}
 	avg = sum / (total - badvalue);
 }
 
