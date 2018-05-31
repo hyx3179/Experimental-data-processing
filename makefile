@@ -13,4 +13,4 @@ library.o : library.c
 
 .PHONY : clean
 clean :
-	-rm edp $(objects)
+	-rm edp $(objects) graph.bmp
