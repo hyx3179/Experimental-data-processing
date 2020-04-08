@@ -1,86 +1,85 @@
 #include <stdio.h>
 #include <math.h>
 
-double getAverage (double arr[], int total, int badvalue);
-double getvariance (double arr[], int total, double avg, int badvalue);
-double getuncertaintyA (int total, double variance);
-double getuncertaintyB ();
-double getuncertainty (double uncertaintyA, double uncertaintyB);
+double getAverage(double arr[], int total, int badvalue);
+double getvariance(double arr[], int total, double avg, int badvalue);
+double getuncertaintyA(int total, double variance);
+double getuncertaintyB();
+double getuncertainty(double uncertaintyA, double uncertaintyB);
 
 int sjsl;
 int i;
 double data[128];
 double data1[64];
 
-void differenceaverage ()
+void differenceaverage()
 {
-	/* æ£€æŸ¥æµ‹é‡è´¨é‡ */
-	printf ("æ£€æŸ¥æµ‹é‡è´¨é‡\n");
+	/* ¼ì²é²âÁ¿ÖÊÁ¿ */
+	printf("¼ì²é²âÁ¿ÖÊÁ¿\n");
 	for (i = 0; i < sjsl / 2; i++)
-		data1[i] = fabs (data[i + 1] - data[i]);
+		data1[i] = fabs(data[i + 1] - data[i]);
 
 	for (i = 0; i < sjsl / 2; i++)
 	{
-		printf (" Î´'[%d] = ", i + 1);
-		printf ("%f\n", data1[i]);
+		printf(" ¦Ä'[%d] = ", i + 1);
+		printf("%f\n", data1[i]);
 	}
 
 	do
 	{
-		i = getchar ();
-		printf ("æ˜¯å¦ä½¿ç”¨æ•°æ®è®¡ç®—ï¼Ÿ1 æ˜¯ 0 å¦ ï¼š");
-		i = getchar ();
+		i = getchar();
+		printf("ÊÇ·ñÊ¹ÓÃÊı¾İ¼ÆËã? 1 ÊÇ 0 ·ñ:");
+		i = getchar();
 		if (i == '0')
 			return;
-	}
-	while (!(i == '0' || i == '1'));
+	} while (!(i == '0' || i == '1'));
 
-	/* é€å·®è®¡ç®— */
-	printf ("é€å·®è®¡ç®—\n");
+	/* Öğ²î¼ÆËã */
+	printf("Öğ²î¼ÆËã\n");
 	for (i = 0; i < sjsl / 2; i++)
-		data1[i] = fabs (data[i + sjsl / 2] - data[i]);
+		data1[i] = fabs(data[i + sjsl / 2] - data[i]);
 
 	for (i = 0; i < sjsl / 2; i++)
 	{
-		printf (" Î´[%d] = ", i + 1);
-		printf ("%f\n", data1[i]);
+		printf(" ¦Ä[%d] = ", i + 1);
+		printf("%f\n", data1[i]);
 	}
 
-	/* å¼€å§‹è®¡ç®— */
+	/* ¿ªÊ¼¼ÆËã */
 	double avg, avgy, variance;
 
-	/* è®¡ç®—å¹³å‡å€¼ */
-	avg = getAverage (data1, sjsl / 2, 0);
+	/* ¼ÆËãÆ½¾ùÖµ */
+	avg = getAverage(data1, sjsl / 2, 0);
 	avgy = avg / sjsl * 2;
 
-	/* è®¡ç®—S(x) */
-	variance = getvariance (data1, sjsl / 2, avg, 0);
+	/* ¼ÆËãS(x) */
+	variance = getvariance(data1, sjsl / 2, avg, 0);
 
-	/* ä¸ç¡®å®šåº¦è®¡ç®— */
+	/* ²»È·¶¨¶È¼ÆËã */
 	double uncertaintyA, uncertaintyB, uncertainty, uncertaintyy, Ex;
 
-	/* ä¸ç¡®å®šåº¦Aç±»åˆ†é‡ */
-	uncertaintyA = getuncertaintyA (sjsl / 2, variance);
+	/* ²»È·¶¨¶ÈAÀà·ÖÁ¿ */
+	uncertaintyA = getuncertaintyA(sjsl / 2, variance);
 
-	/* ä¸ç¡®å®šåº¦Bç±»åˆ†é‡ */
-	uncertaintyB = getuncertaintyB ();
+	/* ²»È·¶¨¶ÈBÀà·ÖÁ¿ */
+	uncertaintyB = getuncertaintyB();
 
-	/* åˆæˆä¸ç¡®å®šåº¦ u(x) */
-	uncertainty = getuncertainty (uncertaintyA, uncertaintyB);
+	/* ºÏ³É²»È·¶¨¶È u(x) */
+	uncertainty = getuncertainty(uncertaintyA, uncertaintyB);
 	uncertaintyy = uncertainty / sjsl * 2;
 
-	/* ç›¸å¯¹ä¸ç¡®å®šåº¦ Ex */
+	/* Ïà¶Ô²»È·¶¨¶È Ex */
 	Ex = uncertainty / avg * 100;
 
-	/* ç›´æ¥æµ‹é‡ç»“æœ */
-	printf ("å¹³å‡å€¼ Î´ = %f\n", avg);
-	printf ("æ ‡å‡†åå·® S(Î´) = %f\n", variance);
-	printf ("u(A) = %f\n", uncertaintyA);
-	printf ("u(B) = %f\n", uncertaintyB);
-	printf ("u(Î´) = %f\n\n", uncertainty);
+	/* Ö±½Ó²âÁ¿½á¹û */
+	printf("Æ½¾ùÖµ ¦Ä = %f\n", avg);
+	printf("±ê×¼Æ«²î S(¦Ä) = %f\n", variance);
+	printf("u(A) = %f\n", uncertaintyA);
+	printf("u(B) = %f\n", uncertaintyB);
+	printf("u(¦Ä) = %f\n\n", uncertainty);
 
-	printf ("å˜åŒ–é‡çš„å¹³å‡å€¼ Î´(y) = %f\n", avgy);
-	printf ("å˜åŒ–é‡çš„ u(Î´) = %f\n", uncertaintyy);
-	printf ("E(Î´) = %f%%\n", Ex);
+	printf("±ä»¯Á¿µÄÆ½¾ùÖµ ¦Ä(y) = %f\n", avgy);
+	printf("±ä»¯Á¿µÄ u(¦Ä) = %f\n", uncertaintyy);
+	printf("E(¦Ä) = %f%%\n", Ex);
 
 }

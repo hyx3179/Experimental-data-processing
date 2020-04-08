@@ -1,38 +1,38 @@
 #include <stdio.h>
 #include <math.h>
 
-void definearray (double arr[]);
-void uncertaintyassessment ();
-void differenceaverage ();
-void svbmp (double y[]);
+void definearray(double arr[]);
+void uncertaintyassessment();
+void differenceaverage();
+void svbmp(double y[]);
 
 int sjsl;
 int i;
 double data[128];
 
-int main ()
+int main()
 {
-	/* 鍔熻兘閫夋嫨 */
+	/* 功能选择 */
 	int t;
-	printf (" 0 涓嶇‘瀹氭�ц瘎浼癨n");
-	printf (" 1 閫愬樊娉昞n");
-	printf (" 2 鐢诲浘锛堝厛杈撳叆y锛塡n");
-	printf (" 閫夋嫨鍔熻兘 ");
-	scanf ("%d", &t);
+	printf(" 0 不确定性评估\n");
+	printf(" 1 逐差法\n");
+	printf(" 2 画图（先输入y）\n");
+	printf(" 选择功能 ");
+	scanf_s("%d", &t);
 
-	/* 鏁版嵁杈撳叆 */
-	definearray (data);
+	/* 数据输入 */
+	definearray(data);
 
 	switch (t)
 	{
 	case 0:
-		uncertaintyassessment ();
+		uncertaintyassessment();
 		break;
 	case 1:
-		differenceaverage ();
+		differenceaverage();
 		break;
 	case 2:
-		svbmp (data);
+		svbmp(data);
 		break;
 	}
 }

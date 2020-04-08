@@ -2,38 +2,38 @@
 #include <stdlib.h>
 #include <math.h>
 
-void definearray (double arr[]);
+void definearray(double arr[]);
 
 int i;
 int sjsl;
 int w, h;
-double x[128];
+int x[128];
 
-void WriteBMP (char *pixels)
+void WriteBMP(char* pixels)
 {
 	int bmi[] = { w * h * 3 + 54, 0, 54, 40, w, h, 1 | 24 << 16, 0, 0, 0, 0, 0, 0 };
-	FILE *bmp = fopen ("graph.bmp", "w");
-	fprintf (bmp, "BM");
-	fwrite (bmi, 52, 1, bmp);
-	fwrite (pixels, 1, w * h * 3, bmp);
-	fclose (bmp);
+	FILE* bmp;
+	fopen_s(&bmp, "graph.bmp", "w");
+	fprintf(bmp, "BM");
+	fwrite(bmi, 52, 1, bmp);
+	fwrite(pixels, 1, w * h * 3, bmp);
+	fclose(bmp);
 }
 
-void svbmp (double y[])
+void svbmp(double y[])
 {
 	for (i = 0; i < sjsl; i++)
 		x[i] = i + 1;
 
 	do
 	{
-		i = getchar ();
-		printf ("xé»˜è®¤ä¸º1~N\n");
-		printf ("æ˜¯å¦é‡æ–°è¾“å…¥ï¼Ÿ1 æ˜¯ 0 å¦ ï¼š");
-		i = getchar ();
+		i = getchar();
+		printf("xÄ¬ÈÏÎª1-N\n");
+		printf("ÊÇ·ñÖØÐÂÊäÈë? 1 ÊÇ 0 ·ñ :");
+		i = getchar();
 		if (i == '1')
-			definearray (x);
-	}
-	while (!(i == '0' || i == '1'));
+			definearray(x);
+	} while (!(i == '0' || i == '1'));
 
 	double y0 = 0;
 	int x0 = sjsl;
@@ -44,14 +44,14 @@ void svbmp (double y[])
 		else
 			y0 = y[i + 1];
 	}
-	y0 = (int) (log10 (y0) + 1);
-	y0 = pow (10, y0);
+	y0 = (int)(log10(y0) + 1);
+	y0 = pow(10, y0);
 
 	w = 100 * (sjsl + 1);
 	h = 1000;
-	char pixels[w * h * 3];
+	char pixels[1 * 1 * 3];
 
-	/* ç»˜åˆ¶åŸºåº• */
+	/* »æÖÆ»ùµ× */
 	int z;
 	for (i = 0; i < w * h * 3;)
 	{
@@ -107,12 +107,12 @@ void svbmp (double y[])
 		}
 	}
 
-	/* ç»˜åˆ¶ç‚¹ */
-	/* è‡ªå®šé¢œè‰² */
+	/* »æÖÆµã */
+	/* ×Ô¶¨ÑÕÉ« */
 	int t = 0;
 	for (i = 0; i < w * h * 3; i++)
 	{
-		if (i == (int) ((int) (y[t] * h / y0) * w * 3 + x[t] * w * 3 / (x0 + 1)))
+		if (i == (int)((int)(y[t] * h / y0) * w * 3 + x[t] * w * 3 / (x0 + 1)))
 		{
 			z = i;
 			/* blue */
@@ -148,5 +148,5 @@ void svbmp (double y[])
 			++t;
 		}
 	}
-	WriteBMP (pixels);
+	WriteBMP(pixels);
 }

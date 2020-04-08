@@ -5,55 +5,56 @@ int sjsl;
 int i;
 double data[128];
 
-double getAverage (double arr[], int total, int badvalue)
+double getAverage(double arr[], int total, int badvalue)
 {
-	double sum, avg;
+	double sum = 0, avg;
 	for (i = 0; i < total; i++)
 		sum += arr[i];
-	avg = sum / (total - badvalue);
+	return avg = sum / ((__int64)total - badvalue);
 }
 
-double getvariance (double arr[], int total, double avg, int badvalue)
+double getvariance(double arr[], int total, double avg, int badvalue)
 {
 	double variance, sum;
 	for (sum = 0, i = 0; i < total; i++)
 	{
 		if (arr[i] != 0)
 		{
-			sum += pow ((arr[i] - avg), 2);
+			sum += pow((arr[i] - avg), 2);
 		}
 	}
-	variance = sqrt (sum / (total - 1 - badvalue));
+	return variance = sqrt(sum / ((__int64)total - 1 - badvalue));
 }
 
-double getuncertaintyA (int total, double variance)
+double getuncertaintyA(int total, double variance)
 {
 	double tp, uncertaintyA;
-	printf ("è¾“å…¥ä¿®æ­£ç³»æ•°tp(Î½) = ");
-	scanf ("%lf", &tp);
-	uncertaintyA = tp * variance / sqrt (total);
+	printf("ÊäÈëÐÞÕýÏµÊýtp(¦Í) = ");
+	scanf_s("%lf", &tp);
+	return uncertaintyA = tp * variance / sqrt(total);
 }
 
-double getuncertaintyB ()
+double getuncertaintyB()
 {
-	double chang, uncertaintyB;
-	printf ("è¾“å…¥è¯¯å·®é™ âˆ† = ");
-	scanf ("%lf", &chang);
-	printf ("è¯¯å·®åˆ†å¸ƒå½¢å¼\n 0 å‡åŒ€åˆ†å¸ƒ\n 1 æ­£æ€åˆ†å¸ƒ\n");
-	scanf ("%d", &i);
+	double chang, uncertaintyB = 0;
+	printf("ÊäÈëÎó²îÏÞ = ");
+	scanf_s("%lf", &chang);
+	printf("Îó²î·Ö²¼ÐÎÊ½\n 0 ¾ùÔÈ·Ö²¼\n 1 ÕýÌ¬·Ö²¼\n");
+	scanf_s("%d", &i);
 	switch (i)
 	{
 	case 0:
-		uncertaintyB = chang / sqrt (3);
+		uncertaintyB = chang / sqrt(3);
 		break;
 	case 1:
 		uncertaintyB = chang / 3;
 		break;
 	}
+	return uncertaintyB;
 }
 
-double getuncertainty (double uncertaintyA, double uncertaintyB)
+double getuncertainty(double uncertaintyA, double uncertaintyB)
 {
 	double uncertainty;
-	uncertainty = sqrt (pow (uncertaintyA, 2) + pow (uncertaintyB, 2));
+	return uncertainty = sqrt(pow(uncertaintyA, 2) + pow(uncertaintyB, 2));
 }
